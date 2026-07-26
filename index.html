@@ -14,8 +14,7 @@
     .topbar { background:#064c2d; color:#eafff1; padding:10px max(5vw,28px); display:flex; justify-content:flex-end; gap:28px; font-size:.9rem; }
     .topbar span { display:flex; align-items:center; gap:7px; }
     header { min-height:150px; padding:24px max(5vw,28px); display:flex; align-items:center; justify-content:space-between; background:#fff; }
-    .seal { width:92px; height:92px; border:3px solid var(--forest); border-radius:50%; display:grid; place-items:center; color:var(--forest); text-align:center; font-weight:700; font-size:.82rem; line-height:1.05; position:relative; }
-    .seal::before { content:"âœ¦"; position:absolute; top:8px; font-size:15px; color:var(--gold); }
+    .official-logo { width:118px; height:118px; flex:0 0 auto; background-image:url("institution-logos-reference.png"); background-repeat:no-repeat; background-size:1920px 943px; }.skuast-logo{background-position:-176px -100px}.icar-logo{width:126px;background-position:-1600px -96px;}
     .brand { text-align:center; }
     .brand h1 { margin:0; font:700 clamp(1.7rem,3.5vw,3rem)/1.1 "Playfair Display",serif; color:var(--forest); letter-spacing:-.5px; }
     .brand p { margin:10px 0 0; font-size:clamp(.9rem,1.5vw,1.1rem); color:#567064; }
@@ -40,17 +39,17 @@
     .programs { display:grid; grid-template-columns:1fr 1fr; gap:22px; }.program { border-radius:15px; padding:30px; color:#fff; min-height:214px; position:relative; overflow:hidden; }.program h3{font:700 1.7rem "Playfair Display",serif;margin:0 0 9px}.program p{margin:0;line-height:1.55;max-width:370px;color:#e4f4e9}.program a{position:absolute;bottom:25px;color:#fff;font-weight:700;text-decoration:none}.bht{background:linear-gradient(135deg,#087547,#0a9b5b)}.bat{background:linear-gradient(135deg,#b57907,#e3a51b)}.program .big{position:absolute;right:20px;bottom:-33px;font:700 9rem "Playfair Display",serif;opacity:.13}
     .notice-wrap{display:grid;grid-template-columns:1.4fr .9fr;gap:24px;margin-top:70px}.notice,.help{background:white;border-radius:14px;padding:28px;box-shadow:0 6px 25px #16472c12}.notice-item{display:flex;gap:18px;padding:16px 0;border-bottom:1px solid #e8eee9}.notice-item:last-child{border:0}.date{background:var(--mint);color:var(--forest);border-radius:8px;width:51px;min-width:51px;height:54px;text-align:center;padding:7px;font-weight:700;line-height:1}.date small{display:block;font-size:.65rem;margin-top:4px}.notice-item b{display:block;margin:2px 0 5px}.notice-item span{font-size:.86rem;color:#72837a}.help{background:var(--forest);color:white}.help h3{font:700 1.7rem "Playfair Display",serif;margin-top:0}.help p{line-height:1.65;color:#d8eee0}.help .btn{background:var(--gold);color:#173428;margin-top:9px}
     footer{background:#043d26;color:#cce2d4;padding:25px max(5vw,28px);display:flex;justify-content:space-between;font-size:.9rem}
-    @media(max-width:800px){ header{min-height:auto}.seal{width:62px;height:62px;font-size:.6rem}.agri{font-size:2rem}.brand p{display:none} nav{padding:15px 24px;gap:15px;flex-wrap:wrap}.portal-name{width:100%}nav a:not(.login){display:none}.quick{grid-template-columns:1fr 1fr}.programs,.notice-wrap{grid-template-columns:1fr}.hero{min-height:420px;padding-top:55px} }
+    @media(max-width:800px){.official-logo{transform:scale(.68)}.icar-logo{display:none} header{min-height:auto}.seal{width:62px;height:62px;font-size:.6rem}.agri{font-size:2rem}.brand p{display:none} nav{padding:15px 24px;gap:15px;flex-wrap:wrap}.portal-name{width:100%}nav a:not(.login){display:none}.quick{grid-template-columns:1fr 1fr}.programs,.notice-wrap{grid-template-columns:1fr}.hero{min-height:420px;padding-top:55px} }
     @media(max-width:440px){.topbar{justify-content:center;font-size:.75rem;gap:12px}.quick{grid-template-columns:1fr}.hero h2{font-size:2.5rem}footer{display:block;line-height:2}}
   </style>
 </head>
 <body>
   <div class="topbar"><span>&#9993; pcpulwama@gmail.com</span><span>&#9742; 6005464652</span></div>
   <header>
-    <div class="seal">BHT<br>&amp; BAT</div>
+    <div class="official-logo skuast-logo" role="img" aria-label="SKUAST Kashmir logo"></div>
     <div class="brand"><h1>KVK/Extension Training Centre, Malangpora Pulwama</h1>
       <p>Sher-e-Kashmir University of Agricultural Sciences & Technology of Kashmir</p></div>
-    <div class="agri">â™§</div>
+    <div class="official-logo icar-logo" role="img" aria-label="ICAR logo"></div>
   </header>
   <nav><div class="portal-name">STUDENT PORTAL</div><a href="index.html">Home</a><a href="about.html">About</a><a href="courses.html">Courses</a><a href="downloads.html">Downloads</a><a href="gallery.html">Gallery</a><a href="contact.html">Contact</a><a class="login" href="login.html">&#128100; Student Login</a></nav>
   <section class="hero" id="home"><div class="hero-copy"><div class="eyebrow">Learn Â· Grow Â· Lead</div><h2>Your journey begins with purpose.</h2><p>Access course material, academic updates, learning resources and everything you need to make your student life successful.</p><div class="hero-buttons"><a class="btn primary" href="login.html">Explore Student Dashboard</a><a class="btn outline" href="courses.html">View Programmes</a></div></div></section>
@@ -59,6 +58,9 @@
   <footer><span>Â© 2026 BHT &amp; BAT Student Portal</span><span>Academic excellence Â· Rural progress</span></footer>
 </body>
 </html>
+
+
+
 
 
 
