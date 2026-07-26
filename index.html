@@ -14,7 +14,7 @@
     .topbar { background:#064c2d; color:#eafff1; padding:10px max(5vw,28px); display:flex; justify-content:flex-end; gap:28px; font-size:.9rem; }
     .topbar span { display:flex; align-items:center; gap:7px; }
     header { min-height:150px; padding:24px max(5vw,28px); display:flex; align-items:center; justify-content:space-between; background:#fff; }
-    .official-logo { width:118px; height:118px; flex:0 0 auto; background-image:url("institution-logos-reference.png"); background-repeat:no-repeat; background-size:1920px 943px; }.skuast-logo{background-position:-176px -100px}.icar-logo{width:126px;background-position:-1600px -96px;}
+    .official-logo { width:118px; height:118px; flex:0 0 auto; object-fit:contain; background:#fff; }.skuast-logo{}.icar-logo{width:126px;}
     .brand { text-align:center; }
     .brand h1 { margin:0; font:700 clamp(1.7rem,3.5vw,3rem)/1.1 "Playfair Display",serif; color:var(--forest); letter-spacing:-.5px; }
     .brand p { margin:10px 0 0; font-size:clamp(.9rem,1.5vw,1.1rem); color:#567064; }
@@ -46,10 +46,10 @@
 <body>
   <div class="topbar"><span>&#9993; pcpulwama@gmail.com</span><span>&#9742; 6005464652</span></div>
   <header>
-    <div class="official-logo skuast-logo" role="img" aria-label="SKUAST Kashmir logo"></div>
+    <img class="official-logo skuast-logo" src="skuast-kashmir-logo.png" alt="SKUAST Kashmir logo">
     <div class="brand"><h1>KVK/Extension Training Centre, Malangpora Pulwama</h1>
       <p>Sher-e-Kashmir University of Agricultural Sciences & Technology of Kashmir</p></div>
-    <div class="official-logo icar-logo" role="img" aria-label="ICAR logo"></div>
+    <img class="official-logo icar-logo" src="icar-logo.png" alt="ICAR logo">
   </header>
   <nav><div class="portal-name">STUDENT PORTAL</div><a href="index.html">Home</a><a href="about.html">About</a><a href="courses.html">Courses</a><a href="downloads.html">Downloads</a><a href="gallery.html">Gallery</a><a href="contact.html">Contact</a><a class="login" href="login.html">&#128100; Student Login</a></nav>
   <section class="hero" id="home"><div class="hero-copy"><div class="eyebrow">Learn Â· Grow Â· Lead</div><h2>Your journey begins with purpose.</h2><p>Access course material, academic updates, learning resources and everything you need to make your student life successful.</p><div class="hero-buttons"><a class="btn primary" href="login.html">Explore Student Dashboard</a><a class="btn outline" href="courses.html">View Programmes</a></div></div></section>
@@ -58,6 +58,8 @@
   <footer><span>Â© 2026 BHT &amp; BAT Student Portal</span><span>Academic excellence Â· Rural progress</span></footer>
 </body>
 </html>
+
+
 
 
 
