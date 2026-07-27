@@ -5,6 +5,8 @@ import json
 import os
 import secrets
 import sqlite3
+import base64
+import re
 from http import HTTPStatus
 from http.cookies import SimpleCookie
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -13,6 +15,7 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parent
 DATABASE = ROOT / "portal.db"
+UPLOADS = ROOT / "uploads"
 SESSIONS = {}
 
 
@@ -34,6 +37,7 @@ def verify_password(password, stored):
 
 
 def initialise_database():
+    UPLOADS.mkdir(exist_ok=True)
     con = db()
     con.executescript("""
         CREATE TABLE IF NOT EXISTS users (
@@ -104,12 +108,20 @@ class PortalHandler(SimpleHTTPRequestHandler):
         if route == "/api/notices":
             con = db(); rows = [dict(row) for row in con.execute("SELECT * FROM notices ORDER BY id DESC")]; con.close()
             return self.send_json(rows)
+        if route == "/api/downloads":
+            con = db(); rows = [dict(row) for row in con.execute("SELECT * FROM downloads ORDER BY id DESC")]; con.close()
+            return self.send_json(rows)
         if route == "/api/session":
             return self.send_json({"user": self.current_user()})
         if route == "/api/admin/notices":
             user = self.current_user()
             if not user or user["role"] != "admin": return self.send_json({"error": "Administrator access required."}, HTTPStatus.FORBIDDEN)
             con = db(); rows = [dict(row) for row in con.execute("SELECT * FROM notices ORDER BY id DESC")]; con.close()
+            return self.send_json(rows)
+        if route == "/api/admin/downloads":
+            user = self.current_user()
+            if not user or user["role"] != "admin": return self.send_json({"error": "Administrator access required."}, HTTPStatus.FORBIDDEN)
+            con = db(); rows = [dict(row) for row in con.execute("SELECT * FROM downloads ORDER BY id DESC")]; con.close()
             return self.send_json(rows)
         return super().do_GET()
 
@@ -140,6 +152,32 @@ class PortalHandler(SimpleHTTPRequestHandler):
             if not data.get("title", "").strip() or not data.get("body", "").strip(): return self.send_json({"error": "Title and message are required."}, HTTPStatus.BAD_REQUEST)
             con = db(); con.execute("INSERT INTO notices(title,body) VALUES (?,?)", (data["title"].strip(), data["body"].strip())); con.commit(); con.close()
             return self.send_json({"message": "Notice published."})
+        if route == "/api/admin/downloads":
+            user = self.current_user()
+            if not user or user["role"] != "admin": return self.send_json({"error": "Administrator access required."}, HTTPStatus.FORBIDDEN)
+            title = str(data.get("title", "")).strip()
+            description = str(data.get("description", "")).strip()
+            file_name = str(data.get("file_name", "")).strip()
+            file_data = str(data.get("file_data", ""))
+            if not title or not file_name or not file_data:
+                return self.send_json({"error": "Document title and PDF file are required."}, HTTPStatus.BAD_REQUEST)
+            if not file_name.lower().endswith(".pdf") or not file_data.startswith("data:application/pdf;base64,"):
+                return self.send_json({"error": "Please upload a PDF file."}, HTTPStatus.BAD_REQUEST)
+            try:
+                raw = base64.b64decode(file_data.split(",", 1)[1], validate=True)
+            except (ValueError, base64.binascii.Error):
+                return self.send_json({"error": "The uploaded file could not be read."}, HTTPStatus.BAD_REQUEST)
+            if len(raw) > 10 * 1024 * 1024:
+                return self.send_json({"error": "PDF files must be 10 MB or smaller."}, HTTPStatus.BAD_REQUEST)
+            if not raw.startswith(b"%PDF-"):
+                return self.send_json({"error": "The uploaded file is not a valid PDF."}, HTTPStatus.BAD_REQUEST)
+            safe_name = re.sub(r"[^A-Za-z0-9._-]", "_", Path(file_name).name)
+            stored_name = f"{secrets.token_hex(8)}-{safe_name}"
+            (UPLOADS / stored_name).write_bytes(raw)
+            con = db()
+            con.execute("INSERT INTO downloads(title,description,file_url,file_type) VALUES (?,?,?,?)", (title, description, f"uploads/{stored_name}", "PDF"))
+            con.commit(); con.close()
+            return self.send_json({"message": "PDF uploaded and published."})
         return self.send_json({"error": "Not found."}, HTTPStatus.NOT_FOUND)
 
 
